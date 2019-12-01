@@ -25,9 +25,6 @@ python dexcom_connection_test.py
 ## Conclusion and Thanks
 Thanks to [The Nightscout Foundation](https://www.nightscoutfoundation.org/) for giving us the opportunity to compete for [this bounty](https://www.facebook.com/NightscoutFoundation/posts/3170040823071192) during The Great Dexcom Share Blackout of 2019. Hopefully it will help people be more aware of whether the Dexcom services are working at any given time. I cribbed heavily from the following prior work:
 
-https://stackoverflow.com/questions/48579740/how-to-write-a-post-on-facebook-using-python
-https://www.mattcrampton.com/blog/step_by_step_tutorial_to_post_to_twitter_using_python/
-
 - [Dexcom\_Tools](https://github.com/jerm/dexcom_tools/) by Jeremy Price
 - [Four Simple Steps To Post To Twitter Using Python](https://www.mattcrampton.com/blog/step_by_step_tutorial_to_post_to_twitter_using_python/) by Matt Crampton
 - [How to Write a Post on Facebook Using Python](https://stackoverflow.com/questions/48579740/how-to-write-a-post-on-facebook-using-python), asked by [sowmya](https://stackoverflow.com/users/8770153/sowmya) and answered by himself
