@@ -3,7 +3,7 @@
 ## Introduction
 This is a very rough version of a Python service to monitor whether the Dexcom Share service is running. It tries to login and, if it succeeds, posts a message on Facebook and Twitter if the service was previously down. If it was previously up and is now down it posts a message to that effect too. If the service status hasn't changed between runs it doesn't post anything to avoid alert fatigue.
 
-## Environment Variables
+## Environment Variables and Setup
 The script requires the following environment variables to be created:
 
 - `DEXCOM_ACCOUNT_NAME`: The username you use to log into the Dexcom Share app
@@ -14,6 +14,12 @@ The script requires the following environment variables to be created:
 - `TWITTER_CONSUMER_SECRET`: The Consumer Secret provided by the Twitter platform
 - `TWITTER_ACCESS_TOKEN`: The Access Token provided by the Twitter platform
 - `TWITTER_ACCESS_SECRET`: The Access Secret provided by the Twitter platform
+
+Once the environment variables are entered you can install the two needed packages, `tweepy` and `facebook-sdk`:
+
+```
+pip install -r requirements.txt
+```
 
 ## Execution
 Once you add the above environment variables you can invoke the script as follows:
