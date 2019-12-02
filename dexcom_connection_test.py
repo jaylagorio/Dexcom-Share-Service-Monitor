@@ -163,7 +163,7 @@ def fetch(sessionID):
         "minutes":  1440,
         "maxCount": 1
         }
-    url = DexcomServerData.LatestGlucose_url + '?' + urllib.parse.urlencode(q)
+    url = DexcomServerData.LatestGlucose_url + '?' + urllib.urlencode(q)
 
     # Build the body and headers for the request
     body = {
@@ -179,34 +179,6 @@ def fetch(sessionID):
 
     # Post the request
     return requests.post(url, json=body, headers=headers)
-
-
-def parse_dexcom_response(res):
-    epochtime = int((
-                datetime.datetime.utcnow() -
-                datetime.datetime(1970, 1, 1)).total_seconds())
-    try:
-        last_reading_time = int(
-            re.search('\d+', res.json()[0]['ST']).group())/1000
-        reading_lag = epochtime - last_reading_time
-        mgdl = res.json()[0]['Value']
-        log.info(
-                "Last bg: {}  last reading at: {} seconds ago".format(mgdl, reading_lag))
-        if reading_lag > LAST_READING_MAX_LAG:
-            log.warning(
-                "***WARN It has been {} minutes since DEXCOM got a" +
-                "new measurement".format(int(reading_lag/60)))
-        return {
-                "bg": mgdl,
-                "reading_lag": reading_lag,
-                "last_reading_time": last_reading_time
-                }
-    except IndexError:
-        log.error(
-                "Caught IndexError: return code:{} ... response output" +
-                " below".format(res.status_code))
-        log.error(res.__dict__)
-        return None
 
 
 # Attempt to authenticate against the Dexcom servers
@@ -279,14 +251,9 @@ def dexcom_check_connect():
     # the function to download BGs from Dexcom
     try:
         res = fetch(get_sessionID())
-        if res and res.status_code < 400:
-            reading = parse_dexcom_response(res)
-            if reading:
-                log.info("Successfully returned a reading.")
-                return True
-            else:
-                log.error("parse_dexcom_response returned None. investigate above logs")
-                return False
+        if res.status_code == 200:
+            log.info("Successfully returned readings.")
+            return True
         else:
             log.warning("Saw an error from the dexcom api, code: {}.  details to follow".format(res.status_code))
             raise FetchError(res.status_code, res)
